@@ -5,28 +5,25 @@ A 7-question, zero-dependency tool that estimates how much ARR a B2B SaaS compan
 This is an open-source, self-hostable version of the diagnostic at [obludzyner.com/diagnostic](https://obludzyner.com/diagnostic). Same 7 questions, same formula, same benchmark sources. Run it in your own terminal, drop it into Claude as a skill, or wire it into your own GPT. Nothing you enter is sent anywhere.
 
 <p align="center">
-  <img src="examples/sample_result.svg" alt="Sample output: churn and NRR vs. peer benchmarks" width="480">
+  <img src="examples/sample_dashboard.png" alt="Sample dashboard: ARR leak, churn and NRR vs. peer benchmarks, and the 6-dimension operating profile" width="620">
 </p>
 
-<p align="center"><sub>Real output from <code>python3 diagnostic.py --arr 5000000 --churn 15 --expansion 8 ...</code> - not a mockup. See <a href="examples/sample_result.json">the full JSON</a>.</sub></p>
+<p align="center"><sub>Real output for a $5M ARR company at 15% churn, 8% expansion - not a mockup. Reproduce it: <code>python3 diagnostic.py --arr 5000000 --churn 15 --expansion 8 --q1 1 --q2 1 --q3 1 --q4 2 --q5 2 --q6 1 --json | python3 render_chart.py /dev/stdin out.png</code>. Full data: <a href="examples/sample_result.json">sample_result.json</a>.</sub></p>
+
+## What you get
+
+- **A headline number** - estimated ARR leak per year, split into recoverable churn and expansion not generated
+- **Two benchmark charts** - your churn and NRR plotted directly against peer median, peer top quartile, and industry medians
+- **An Operating Profile** - a 6-dimension, 0-18 scored read on how systematic your post-sales motion actually is, banded from Systematic to Critical
+- **Three ways to run it** - a zero-dependency CLI, a Claude Skill, or your own Custom GPT, all sharing the exact same formula
 
 ## Why this project
 
 Most "free ROI calculator" lead magnets are a black box: you get a number, you don't get the method. This one is the opposite. The formula, the benchmark sources, and the scoring logic are all in this repo, in plain Python, so you can verify the math yourself, adapt it to your own baseline assumptions, or run it entirely offline.
 
-## What it does
-
-Given your current ARR, annual gross revenue churn, and expansion revenue (as a % of ARR), plus 6 quick questions about how your post-sales motion actually runs, it computes:
-
-- **Estimated ARR leak per year** - split into recoverable churn (your churn rate vs. a 5% system baseline) and expansion not generated (your expansion rate vs. a 20%-of-ARR potential)
-- **NRR today vs. NRR at full system output**
-- **Peer and industry benchmarks** for churn and NRR
-- **An Operating Profile score** (0-18) across 6 dimensions - renewal visibility, expansion motion, commercial mandate, ARR risk visibility, founder dependency, and system scalability - with a directional band (Systematic / Partially systematic / Reactive / Critical)
-- An SVG chart comparing your numbers to peer benchmarks
-
 ## How to run it
 
-No installation required - pure Python standard library.
+The diagnostic logic (`diagnostic.py`) is pure Python standard library, zero installs:
 
 ```bash
 # Interactive (asks you the 7 questions)
@@ -38,9 +35,20 @@ python3 diagnostic.py --arr 5000000 --churn 15 --expansion 8 \
     --svg result.svg --json
 ```
 
-`--q1` through `--q6` map to the 6 qualitative questions in order (renewal visibility, expansion motion, commercial mandate, ARR risk visibility, founder dependency, system scalability), each scored 0 (best) to 3 (worst) based on which of the 4 options fits. See `diagnostic.py` for the exact option text.
+`--q1` through `--q6` map to the 6 qualitative questions in order (renewal visibility, expansion motion, commercial mandate, ARR risk visibility, founder dependency, system scalability), each scored 0 (best) to 3 (worst) based on which of the 4 options fits. See `diagnostic.py` for the exact option text. The `--svg` flag produces a lightweight, dependency-free chart.
 
-Example output for a $5M ARR company at 15% churn, 8% expansion: [`examples/sample_result.json`](examples/sample_result.json), [`examples/sample_result.svg`](examples/sample_result.svg).
+For the full dashboard shown above (the hero number, stat tiles, and the operating-profile scorecard), pipe the JSON into `render_chart.py`, which uses matplotlib:
+
+```bash
+pip install matplotlib
+python3 diagnostic.py --arr 5000000 --churn 15 --expansion 8 \
+    --q1 1 --q2 1 --q3 1 --q4 2 --q5 2 --q6 1 --json > result.json
+python3 render_chart.py result.json dashboard.png
+```
+
+This split is deliberate: the numbers you can audit and the logic you'd hand to an agent have zero dependencies; the presentation layer opts into matplotlib because that is what it takes to render something worth sharing.
+
+Example output for a $5M ARR company at 15% churn, 8% expansion: [`examples/sample_dashboard.png`](examples/sample_dashboard.png) (the full dashboard), [`examples/sample_result.svg`](examples/sample_result.svg) (the zero-dependency chart), [`examples/sample_result.json`](examples/sample_result.json) (the raw data).
 
 ## Run it as a Claude Skill
 

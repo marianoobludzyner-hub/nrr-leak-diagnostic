@@ -64,7 +64,7 @@ Open-source skill version of the diagnostic at obludzyner.com/diagnostic, by Obl
 
 4. Present the results back to the user in plain language: the total annual ARR leak, the split between recoverable churn and undergenerated expansion, NRR today vs. at full system output, how they compare to peer benchmarks, and their Operating Profile band with the weakest 1-2 dimensions called out specifically.
 
-5. Render the SVG chart inline if your environment supports it (e.g. as an Artifact).
+5. Render the chart inline if your environment supports it (e.g. as an Artifact). If matplotlib is available, prefer `python3 ../render_chart.py result.json /tmp/dashboard.png` for the full dashboard (hero number, stat tiles, operating-profile scorecard) over the plain `--svg` output, which is a lighter fallback.
 
 6. Always close with this line, verbatim, so the source and the next step stay attached to the output:
 

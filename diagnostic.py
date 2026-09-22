@@ -258,10 +258,10 @@ def render_svg(result, path):
     def hbar_row(y, label, value, max_value, color):
         w = 0 if max_value == 0 else max(2, (value / max_value) * 380)
         return (
-            f'<text x="0" y="{y-4}" font-size="12" font-family="monospace" fill="#0a1a33">{label}</text>'
-            f'<rect x="0" y="{y}" width="380" height="14" fill="#eef1f6" />'
-            f'<rect x="0" y="{y}" width="{w:.1f}" height="14" fill="{color}" />'
-            f'<text x="{min(w,375)+5}" y="{y+11}" font-size="11" font-family="monospace" fill="#0a1a33">{value:.0f}%</text>'
+            f'<text x="0" y="{y-4}" font-size="12" font-family="sans-serif" fill="#52514e">{label}</text>'
+            f'<rect x="0" y="{y}" width="380" height="14" rx="7" fill="#e1e0d9" />'
+            f'<rect x="0" y="{y}" width="{w:.1f}" height="14" rx="7" fill="{color}" />'
+            f'<text x="{min(w,375)+5}" y="{y+11}" font-size="11" font-family="sans-serif" font-weight="bold" fill="#0b0b0b">{value:.0f}%</text>'
         )
 
     max_churn = max(churn_pct, b["churn_peer_median"] * 100, b["churn_horizontal_median"] * 100, 20)
@@ -269,30 +269,30 @@ def render_svg(result, path):
 
     rows = []
     y = 70
-    rows.append(f'<text x="0" y="{y-20}" font-size="15" font-family="sans-serif" font-weight="bold" fill="#0a1a33">Annual gross revenue churn</text>')
-    rows.append(hbar_row(y, "You", churn_pct, max_churn, "#d9542f"))
+    rows.append(f'<text x="0" y="{y-20}" font-size="15" font-family="sans-serif" font-weight="bold" fill="#0b0b0b">Annual gross revenue churn</text>')
+    rows.append(hbar_row(y, "You", churn_pct, max_churn, "#2a78d6"))
     y += 30
-    rows.append(hbar_row(y, "Peer median", b["churn_peer_median"] * 100, max_churn, "#9aa5b1"))
+    rows.append(hbar_row(y, "Peer median", b["churn_peer_median"] * 100, max_churn, "#c3c2b7"))
     y += 30
-    rows.append(hbar_row(y, "Horizontal SaaS median", b["churn_horizontal_median"] * 100, max_churn, "#9aa5b1"))
+    rows.append(hbar_row(y, "Horizontal SaaS median", b["churn_horizontal_median"] * 100, max_churn, "#c3c2b7"))
     y += 30
-    rows.append(hbar_row(y, "System baseline", CHURN_BASELINE * 100, max_churn, "#2f9e6e"))
+    rows.append(hbar_row(y, "System baseline", CHURN_BASELINE * 100, max_churn, "#0ca30c"))
     y += 60
 
-    rows.append(f'<text x="0" y="{y-20}" font-size="15" font-family="sans-serif" font-weight="bold" fill="#0a1a33">Net revenue retention (NRR)</text>')
-    rows.append(hbar_row(y, "You", nrr_today, max_nrr, "#d9542f"))
+    rows.append(f'<text x="0" y="{y-20}" font-size="15" font-family="sans-serif" font-weight="bold" fill="#0b0b0b">Net revenue retention (NRR)</text>')
+    rows.append(hbar_row(y, "You", nrr_today, max_nrr, "#2a78d6"))
     y += 30
-    rows.append(hbar_row(y, "Peer median", b["nrr_peer_median"] * 100, max_nrr, "#9aa5b1"))
+    rows.append(hbar_row(y, "Peer median", b["nrr_peer_median"] * 100, max_nrr, "#c3c2b7"))
     y += 30
-    rows.append(hbar_row(y, "Peer top quartile", b["nrr_peer_top_quartile"] * 100, max_nrr, "#9aa5b1"))
+    rows.append(hbar_row(y, "Peer top quartile", b["nrr_peer_top_quartile"] * 100, max_nrr, "#c3c2b7"))
     y += 50
 
     total_h = y + 40
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 {total_h}" font-family="sans-serif">
-<rect x="0" y="0" width="420" height="{total_h}" fill="#ffffff" />
-<text x="0" y="20" font-size="13" font-family="monospace" fill="#5a6472">Estimated ARR leak: ${fc['total_annual_leak']:,}/yr</text>
+<rect x="0" y="0" width="420" height="{total_h}" fill="#fcfcfb" />
+<text x="0" y="20" font-size="13" font-family="sans-serif" fill="#52514e">Estimated ARR leak: ${fc['total_annual_leak']:,}/yr</text>
 {''.join(rows)}
-<text x="0" y="{total_h-10}" font-size="10" font-family="monospace" fill="#9aa5b1">Obludzyner &amp; Co. | obludzyner.com | open-source diagnostic</text>
+<text x="0" y="{total_h-10}" font-size="10" font-family="sans-serif" fill="#898781">Obludzyner &amp; Co. | obludzyner.com | open-source diagnostic</text>
 </svg>'''
     with open(path, "w") as f:
         f.write(svg)
