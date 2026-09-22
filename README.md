@@ -4,6 +4,12 @@ A 7-question, zero-dependency tool that estimates how much ARR a B2B SaaS compan
 
 This is an open-source, self-hostable version of the diagnostic at [obludzyner.com/diagnostic](https://obludzyner.com/diagnostic). Same 7 questions, same formula, same benchmark sources. Run it in your own terminal, drop it into Claude as a skill, or wire it into your own GPT. Nothing you enter is sent anywhere.
 
+<p align="center">
+  <img src="examples/sample_result.svg" alt="Sample output: churn and NRR vs. peer benchmarks" width="480">
+</p>
+
+<p align="center"><sub>Real output from <code>python3 diagnostic.py --arr 5000000 --churn 15 --expansion 8 ...</code> - not a mockup. See <a href="examples/sample_result.json">the full JSON</a>.</sub></p>
+
 ## Why this project
 
 Most "free ROI calculator" lead magnets are a black box: you get a number, you don't get the method. This one is the opposite. The formula, the benchmark sources, and the scoring logic are all in this repo, in plain Python, so you can verify the math yourself, adapt it to your own baseline assumptions, or run it entirely offline.
@@ -49,6 +55,10 @@ See [`gpt/CUSTOM_GPT_INSTRUCTIONS.md`](gpt/CUSTOM_GPT_INSTRUCTIONS.md) - paste i
 - Recoverable churn is measured against a **5% annual churn baseline**, and expansion potential against **20% of portfolio ARR per year** - the working assumptions Obludzyner & Co. uses for B2B SaaS companies up to $10M ARR with a functioning post-sales system. Change `CHURN_BASELINE` and `EXPANSION_POTENTIAL` in `diagnostic.py` if you want to model a different assumption.
 - NRR is approximated as `100 - churn% + expansion%`.
 - Peer benchmarks are directional medians compiled from the **SaaS Capital 2025 Retention Survey**, the **Benchmarkit 2025 B2B SaaS Performance Metrics report**, and **ChartMogul** benchmark data. Your own cohort data is always the better benchmark than any of these - treat them as context, not a target.
+
+## Where this fits in SHIFT
+
+This is the "S" of the [SHIFT Method](https://obludzyner.com/#how): a Theory-of-Constraints-based Revenue Audit that finds exactly where NRR is leaking, before anything else gets installed. Proof it works at full depth, not just as a 7-question estimate: at **Clicktale**, the audit is what found the 60% churn leak before anything else moved -- the same diagnostic instinct this tool automates, applied to a real portfolio instead of self-reported answers.
 
 ## What this is not
 
