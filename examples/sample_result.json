@@ -1,0 +1,70 @@
+{
+  "inputs": {
+    "arr": 5000000.0,
+    "churn_pct": 15.0,
+    "expansion_pct": 8.0
+  },
+  "financial_case": {
+    "churn_cost_today": 750000,
+    "churn_cost_after": 250000,
+    "arr_retained": 500000,
+    "expansion_today": 400000,
+    "expansion_potential": 1000000,
+    "expansion_generated": 600000,
+    "total_annual_leak": 1100000
+  },
+  "nrr": {
+    "today_pct": 93.0,
+    "at_full_system_pct": 115.0
+  },
+  "benchmarks": {
+    "churn_peer_median": 0.09,
+    "churn_horizontal_median": 0.12,
+    "nrr_peer_median": 1.02,
+    "nrr_peer_top_quartile": 1.14,
+    "nrr_horizontal_median": 1.01
+  },
+  "operating_profile": {
+    "score": 10,
+    "max_score": 18,
+    "band": "Partially systematic",
+    "dimensions": [
+      {
+        "key": "renewal_visibility",
+        "label": "Renewal visibility",
+        "answer": "We usually know a few weeks before but scramble",
+        "tier": "Partial"
+      },
+      {
+        "key": "expansion_motion",
+        "label": "Expansion motion",
+        "answer": "It happens occasionally when the customer asks",
+        "tier": "Partial"
+      },
+      {
+        "key": "commercial_mandate",
+        "label": "Commercial mandate",
+        "answer": "Somewhat. They focus on satisfaction more than revenue",
+        "tier": "Partial"
+      },
+      {
+        "key": "arr_risk_visibility",
+        "label": "ARR risk visibility",
+        "answer": "We rely on gut feel and account knowledge",
+        "tier": "Weak"
+      },
+      {
+        "key": "founder_dependency",
+        "label": "Founder dependency",
+        "answer": "More than I should. The team escalates too much",
+        "tier": "Weak"
+      },
+      {
+        "key": "system_scalability",
+        "label": "System scalability",
+        "answer": "We have processes but they depend on specific people",
+        "tier": "Partial"
+      }
+    ]
+  }
+}
