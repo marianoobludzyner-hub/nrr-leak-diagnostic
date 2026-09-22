@@ -58,7 +58,7 @@ See [`gpt/CUSTOM_GPT_INSTRUCTIONS.md`](gpt/CUSTOM_GPT_INSTRUCTIONS.md) - paste i
 
 ## Where this fits in SHIFT
 
-This is the "S" of the [SHIFT Method](https://obludzyner.com/#how): a Theory-of-Constraints-based Revenue Audit that finds exactly where NRR is leaking, before anything else gets installed. Proof it works at full depth, not just as a 7-question estimate: at **Clicktale**, the audit is what found the 60% churn leak before anything else moved -- the same diagnostic instinct this tool automates, applied to a real portfolio instead of self-reported answers.
+This is the "S" of the [SHIFT Method](https://obludzyner.com/#how): a Theory-of-Constraints-based Revenue Audit that finds exactly where NRR is leaking, before anything else gets installed. Proof it works at full depth, not just as a 7-question estimate: at **Clicktale**, the audit surfaced that 60% of revenue up for renewal that quarter was already churning. 7 months later: 95% GRR, 115% NRR across a $10M portfolio -- the same diagnostic instinct this tool automates, applied to a real portfolio instead of self-reported answers.
 
 ## What this is not
 
